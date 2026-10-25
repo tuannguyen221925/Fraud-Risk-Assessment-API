@@ -1,0 +1,4 @@
+Model,Precision,Recall,F1
+LogisticRegression,0.7,0.85,0.76
+RandomForest,0.92,0.81,0.86
+XGBoost,0.87,0.84,0.85

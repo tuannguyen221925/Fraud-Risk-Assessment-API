@@ -1,0 +1,15 @@
+# Virtual Environment
+.venv/
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
+
+#cache
+__pycache__/
+
+#raw data
+data/raw_data/
+data/data_process/creditcard_processed.csv
