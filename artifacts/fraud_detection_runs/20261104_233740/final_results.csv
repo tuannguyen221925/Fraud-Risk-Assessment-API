@@ -1,0 +1,2 @@
+algorithm,version,precision,recall,f1,threshold,confusion_matrix
+XGBoost Pipeline,20261104_233740,0.9518072289156626,0.8061224489795918,0.8729281767955801,0.9100000000000003,"[[56860, 4], [19, 79]]"

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1220">
+    <title>Fraud Detection | Banking AI</title>
+    <link rel="stylesheet" href="/ui/styles.css">
+    <script src="/ui/app.js" defer></script>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="/ui/" aria-label="Banking AI home">
+                <span class="brand-mark">B</span>
+                <span>Banking<span class="brand-muted">AI</span></span>
+            </a>
+            <div class="topbar-right">
+                <span class="system-status"><span class="status-dot"></span> API connected</span>
+                <a class="docs-link" href="/docs" target="_blank" rel="noreferrer">API docs <span aria-hidden="true">↗</span></a>
+            </div>
+        </header>
+
+        <main>
+            <section class="intro">
+                <p class="eyebrow">CREDIT CARD RISK INTELLIGENCE</p>
+                <h1>Understand transaction risk.</h1>
+                <p class="intro-copy">Score a transaction and see which model signals influenced the result.</p>
+            </section>
+
+            <section class="workspace" aria-label="Transaction analysis">
+                <form id="transaction-form" class="panel input-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="section-kicker">01 / INPUT</p>
+                            <h2>Transaction details</h2>
+                        </div>
+                        <span class="required-note">All values required</span>
+                    </div>
+
+                    <div class="demo-picker">
+                        <div class="demo-copy">
+                            <strong>Not sure what to enter?</strong>
+                            <span>V1–V28 are anonymized dataset features. Load a real example to try the demo.</span>
+                            <span id="sample-status" class="sample-status" aria-live="polite"></span>
+                        </div>
+                        <div class="demo-actions">
+                            <button class="sample-button" type="button" data-sample="normal">Load Normal sample</button>
+                            <button class="sample-button fraud-sample" type="button" data-sample="fraud">Load Fraud sample</button>
+                        </div>
+                    </div>
+
+                    <div class="primary-fields">
+                        <label class="field" for="Time">
+                            <span>Time <small>seconds since first transaction</small></span>
+                            <input id="Time" name="Time" type="number" step="any" min="0" value="0" required>
+                        </label>
+                        <label class="field" for="Amount">
+                            <span>Amount <small>transaction amount</small></span>
+                            <input id="Amount" name="Amount" type="number" step="any" min="0" value="0" required>
+                        </label>
+                    </div>
+
+                    <details class="feature-details">
+                        <summary>
+                            <span><strong>Model features</strong><small>V1–V28 are anonymized transaction signals</small></span>
+                            <span class="feature-count">28 fields</span>
+                        </summary>
+                        <div id="feature-grid" class="feature-grid"></div>
+                    </details>
+
+                    <div class="form-footer">
+                        <p class="form-hint">Amount and Time are scaled by the trained model pipeline.</p>
+                        <button id="submit-button" class="primary-button" type="submit" disabled>
+                            <span class="button-label">Analyze transaction</span>
+                            <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                    <p id="form-error" class="form-error" role="alert" hidden></p>
+                </form>
+
+                <aside class="panel result-panel" aria-live="polite">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="section-kicker">02 / EXPLANATION</p>
+                            <h2>Risk assessment</h2>
+                        </div>
+                        <span class="shap-badge">XGBoost + SHAP</span>
+                    </div>
+
+                    <div id="empty-result" class="empty-result">
+                        <div class="empty-icon" aria-hidden="true">↗</div>
+                        <h3>Ready to analyze</h3>
+                        <p>Submit transaction data to receive a prediction and its top contributing features.</p>
+                    </div>
+
+                    <div id="result-content" class="result-content" hidden>
+                        <div class="prediction-row">
+                            <div>
+                                <p class="result-label">PREDICTION</p>
+                                <p id="prediction-label" class="prediction-label">—</p>
+                            </div>
+                            <span id="prediction-icon" class="prediction-icon" aria-hidden="true">•</span>
+                        </div>
+                        <div class="probability-block">
+                            <div class="probability-heading">
+                                <span>Fraud probability</span>
+                                <strong id="probability-value">0%</strong>
+                            </div>
+                            <div class="probability-track"><span id="probability-bar"></span></div>
+                            <p id="threshold-note" class="threshold-note"></p>
+                        </div>
+                        <div class="reasons-block">
+                            <div class="reasons-heading">
+                                <h3>Top contributing signals</h3>
+                                <span>SHAP impact</span>
+                            </div>
+                            <div id="reasons-list" class="reasons-list"></div>
+                            <p class="impact-note">Positive impact pushes toward Fraud; negative impact pushes toward Normal.</p>
+                        </div>
+                    </div>
+                    <div id="loading-state" class="loading-state" hidden>
+                        <span class="spinner" aria-hidden="true"></span>
+                        <span>Scoring transaction and calculating explanation…</span>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="model-strip" aria-label="Active model metrics">
+                <div class="model-strip-title">
+                    <span class="status-dot"></span>
+                    <span>ACTIVE MODEL</span>
+                    <strong id="model-version">Loading…</strong>
+                </div>
+                <div class="model-metric"><span>Precision</span><strong id="model-precision">—</strong></div>
+                <div class="model-metric"><span>Recall</span><strong id="model-recall">—</strong></div>
+                <div class="model-metric"><span>F1 score</span><strong id="model-f1">—</strong></div>
+                <div class="model-metric"><span>Decision threshold</span><strong id="model-threshold">—</strong></div>
+            </section>
+
+            <p class="disclaimer">Educational project demo. V1–V28 are anonymized features from the source dataset; this screen is not a production banking decision system.</p>
+        </main>
+    </div>
+</body>
+</html>

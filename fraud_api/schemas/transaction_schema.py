@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
-class PredictionRequest(
-    BaseModel
-):
+class PredictionRequest(BaseModel):
+    Time: float
+
     V1: float
     V2: float
     V3: float
@@ -31,10 +31,8 @@ class PredictionRequest(
     V26: float
     V27: float
     V28: float
-    
-    scaled_amount: float
-    scaled_time: float
 
+    Amount: float
     
 class PredictionResponse(
     BaseModel

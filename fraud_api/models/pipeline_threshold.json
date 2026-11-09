@@ -1,0 +1,8 @@
+{
+    "best_threshold": 0.9100000000000003,
+    "selection_metric": "f1",
+    "selected_on": "validation",
+    "validation_precision": 0.9384615384615385,
+    "validation_recall": 0.7721518987341772,
+    "validation_f1": 0.8472222222222222
+}
